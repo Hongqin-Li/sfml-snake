@@ -10,7 +10,7 @@
 #include "../game.h"
 #include "game_over_state.h"
 
-GameState::GameState(sf::RenderWindow *window) : snake_(window), window_(window)
+GameState::GameState(sf::RenderWindow *window, const vector<RectangleShape> &tiles) : snake_(window), window_(window), tiles_(tiles)
 {
 #ifdef DEBUG
   std::cout << "[GameState] ctor" << std::endl;
@@ -37,12 +37,15 @@ void GameState::update(sf::Time delta)
 
   if (snake_.hitSelf()) {
     std::cout << "[Game] snake hit self!" << std::endl;
-    exitState(std::make_unique<GameOverState>(window_, snake_.getSize()));
+    exitState(std::make_unique<GameOverState>(window_, snake_.getSize(), std::move(tiles_)));
   }
 }
 
 void GameState::render(sf::RenderWindow *window)
 {
+  if (window == nullptr) window = window_;
+  for (auto& tile: tiles_) window->draw(tile);
+
   snake_.render();
   for (auto& fruit : fruit_) fruit.render();
 }

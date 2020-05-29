@@ -5,11 +5,9 @@
 #include "game_state.h"
 #include "../resource.h"
 
-GameOverState::GameOverState(sf::RenderWindow *window, int score)
-    : window_(window), score_(score)
+GameOverState::GameOverState(sf::RenderWindow *window, int score, std::vector<sf::RectangleShape> tiles)
+    : window_(window), score_(score), tiles_(tiles)
 {
-  font_.loadFromFile("assets/fonts/main.ttf");
-
   auto& rm = ResourceManager::getInstance().fonts;
   rm.acquire("assets/fonts/main.ttf");
 
@@ -42,7 +40,7 @@ GameOverState::~GameOverState()
 void GameOverState::handleInput()
 {
   if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    exitState(std::make_unique<GameState>(window_));
+    exitState(std::make_unique<GameState>(window_, std::move(tiles_)));
   else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     exitState();
 }

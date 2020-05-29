@@ -14,7 +14,7 @@ enum {
 class State {
  public:
   State();
-  virtual ~State() = 0;
+  virtual ~State();
 
   virtual void handleInput() = 0;
   virtual void update(sf::Time delta) = 0;

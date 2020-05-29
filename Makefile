@@ -10,7 +10,7 @@ DEPS := $(OBJS:.o=.d)
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -D DEBUG
+CPPFLAGS ?= $(INC_FLAGS) -MMD -MP -D DEBUG -g
 LDFLAGS := -lm -lstdc++ -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 
 $(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
@@ -38,6 +38,10 @@ $(BUILD_DIR)/%.cc.o: %.cc
 .PHONY: clean run lint
 run: $(BUILD_DIR)/$(TARGET_EXEC)
 	$<
+
+test-mem: $(BUILD_DIR)/$(TARGET_EXEC)
+	valgrind --leak-check=full $<
+	# --show-leak-kinds=all $<
 
 clean:
 	$(RM) -r $(BUILD_DIR)

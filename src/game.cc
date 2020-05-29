@@ -121,7 +121,7 @@ void Game::update(sf::Time dt)
 
 void Game::render()
 {
-  window_.clear(sf::Color(241, 241, 241));
+  window_.clear();
   auto& this_state = states_.top();
   this_state->render();
   window_.display();

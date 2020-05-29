@@ -8,7 +8,7 @@
 class GameOverState : public State
 {
  public:
-  GameOverState(sf::RenderWindow *window, int score);
+  GameOverState(sf::RenderWindow *window, int score, std::vector<sf::RectangleShape> tiles);
   ~GameOverState();
 
   void handleInput() override;
@@ -17,8 +17,8 @@ class GameOverState : public State
 
  private:
   sf::RenderWindow *window_;
-  sf::Font font_;
   sf::Text text_;
+  std::vector<sf::RectangleShape> tiles_;
 
   int score_;
 };

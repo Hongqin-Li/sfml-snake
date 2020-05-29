@@ -8,10 +8,13 @@
 #include "state.h"
 #include "../objects/snake.h"
 
+using std::vector;
+using sf::RectangleShape;
+
 class GameState : public State
 {
 public:
-  GameState(sf::RenderWindow *window);
+  GameState(sf::RenderWindow *window, const vector<RectangleShape> &tiles);
   ~GameState();
 
   void handleInput() override;
@@ -23,9 +26,10 @@ public:
 private:
   sf::RenderWindow *window_;
 
+
   Snake snake_;
   std::vector<Fruit> fruit_;
-  
+  vector<RectangleShape> tiles_;
 };
 
 #endif  // SRC_GAME_STATE_H_
